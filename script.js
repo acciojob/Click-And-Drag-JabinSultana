@@ -1,71 +1,45 @@
-const container = document.getElementById("container");
-const cubes = document.querySelectorAll(".cube");
+const slider = document.querySelector(".items");
 
-let activeCube = null;
-let offsetX = 0;
-let offsetY = 0;
+let isDown = false;
+let startX;
+let scrollLeft;
 
-// Mouse Down → Start Drag
-cubes.forEach(cube => {
+// Mouse Down
+slider.addEventListener("mousedown", (e) => {
 
-  cube.addEventListener("mousedown", (e) => {
+  isDown = true;
 
-    activeCube = cube;
+  startX = e.pageX - slider.offsetLeft;
 
-    const rect = cube.getBoundingClientRect();
-
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-
-    cube.style.position = "absolute";
-    cube.style.zIndex = "1000";
-
-  });
+  scrollLeft = slider.scrollLeft;
 
 });
 
-// Mouse Move → Drag
-document.addEventListener("mousemove", (e) => {
+// Mouse Leave
+slider.addEventListener("mouseleave", () => {
 
-  if (!activeCube) return;
-
-  const containerRect =
-    container.getBoundingClientRect();
-
-  let newLeft =
-    e.clientX - containerRect.left - offsetX;
-
-  let newTop =
-    e.clientY - containerRect.top - offsetY;
-
-  // Boundary Constraints
-
-  const cubeWidth = activeCube.offsetWidth;
-  const cubeHeight = activeCube.offsetHeight;
-
-  const maxLeft =
-    container.offsetWidth - cubeWidth;
-
-  const maxTop =
-    container.offsetHeight - cubeHeight;
-
-  // Prevent leaving container
-
-  newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-  newTop = Math.max(0, Math.min(newTop, maxTop));
-
-  activeCube.style.left = newLeft + "px";
-  activeCube.style.top = newTop + "px";
+  isDown = false;
 
 });
 
-// Mouse Up → Drop
-document.addEventListener("mouseup", () => {
+// Mouse Up
+slider.addEventListener("mouseup", () => {
 
-  if (activeCube) {
-    activeCube.style.zIndex = "1";
-  }
+  isDown = false;
 
-  activeCube = null;
+});
+
+// Mouse Move (Dragging)
+slider.addEventListener("mousemove", (e) => {
+
+  if (!isDown) return;
+
+  e.preventDefault();
+
+  const x = e.pageX - slider.offsetLeft;
+
+  const walk = (x - startX) * 2;
+
+  slider.scrollLeft = scrollLeft - walk;
 
 });
