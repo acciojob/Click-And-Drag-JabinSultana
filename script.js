@@ -4,7 +4,6 @@ let isDown = false;
 let startX = 0;
 let scrollLeft = 0;
 
-// Mouse Down
 slider.addEventListener('mousedown', (e) => {
   isDown = true;
 
@@ -12,27 +11,21 @@ slider.addEventListener('mousedown', (e) => {
   scrollLeft = slider.scrollLeft;
 });
 
-// Mouse Leave
-slider.addEventListener('mouseleave', () => {
-  isDown = false;
-});
-
-// Mouse Up
-slider.addEventListener('mouseup', () => {
-  isDown = false;
-});
-
-// Mouse Move (Important Fix Here)
 slider.addEventListener('mousemove', (e) => {
-
   if (!isDown) return;
 
   e.preventDefault();
 
-  const x = e.pageX;
+  const walk = startX - e.pageX;
 
-  const walk = x - startX;
+  // FORCE scroll update
+  slider.scrollLeft = scrollLeft + walk;
+});
 
-  slider.scrollLeft = scrollLeft - walk;
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+});
 
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
 });
