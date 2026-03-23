@@ -1,47 +1,39 @@
-// Your code here.
 // Select the container
 const slider = document.querySelector('.items');
 
 let isDown = false;
-let startX;
-let scrollLeft;
+let startX = 0;
+let scrollLeft = 0;
 
-// When mouse button is pressed
-slider.addEventListener('mousedown', (e) => {
+// Mouse Down
+slider.addEventListener('mousedown', function (e) {
   isDown = true;
   slider.classList.add('active');
 
-  // Get starting mouse position
-  startX = e.pageX - slider.offsetLeft;
-
-  // Store initial scroll position
+  startX = e.pageX;
   scrollLeft = slider.scrollLeft;
 });
 
-// When mouse leaves container
-slider.addEventListener('mouseleave', () => {
+// Mouse Leave
+slider.addEventListener('mouseleave', function () {
   isDown = false;
   slider.classList.remove('active');
 });
 
-// When mouse button released
-slider.addEventListener('mouseup', () => {
+// Mouse Up
+slider.addEventListener('mouseup', function () {
   isDown = false;
   slider.classList.remove('active');
 });
 
-// When mouse moves
-slider.addEventListener('mousemove', (e) => {
+// Mouse Move
+slider.addEventListener('mousemove', function (e) {
   if (!isDown) return;
 
   e.preventDefault();
 
-  // Current mouse position
-  const x = e.pageX - slider.offsetLeft;
+  const x = e.pageX;
+  const walk = x - startX;
 
-  // Distance moved
-  const walk = (x - startX) * 2; // scroll speed
-
-  // Scroll container
   slider.scrollLeft = scrollLeft - walk;
 });
