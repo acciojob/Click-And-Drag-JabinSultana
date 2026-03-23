@@ -1,44 +1,37 @@
-const slider = document.querySelector(".items");
+const slider = document.querySelector('.items');
 
 let isDown = false;
-let startX;
-let scrollLeft;
+let startX = 0;
+let scrollLeft = 0;
 
 // Mouse Down
-slider.addEventListener("mousedown", (e) => {
-
+slider.addEventListener('mousedown', (e) => {
   isDown = true;
 
-  startX = e.pageX - slider.offsetLeft;
-
+  startX = e.pageX;
   scrollLeft = slider.scrollLeft;
-
 });
 
 // Mouse Leave
-slider.addEventListener("mouseleave", () => {
-
+slider.addEventListener('mouseleave', () => {
   isDown = false;
-
 });
 
 // Mouse Up
-slider.addEventListener("mouseup", () => {
-
+slider.addEventListener('mouseup', () => {
   isDown = false;
-
 });
 
-// Mouse Move (Dragging)
-slider.addEventListener("mousemove", (e) => {
+// Mouse Move (Important Fix Here)
+slider.addEventListener('mousemove', (e) => {
 
   if (!isDown) return;
 
   e.preventDefault();
 
-  const x = e.pageX - slider.offsetLeft;
+  const x = e.pageX;
 
-  const walk = (x - startX) * 2;
+  const walk = x - startX;
 
   slider.scrollLeft = scrollLeft - walk;
 
