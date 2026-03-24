@@ -12,6 +12,8 @@ body {
 
   white-space: nowrap;
 
+	position: relative;
+
   cursor: grab;
 
   border: 3px solid black;
