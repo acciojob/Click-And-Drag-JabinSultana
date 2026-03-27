@@ -5,21 +5,13 @@ let startX;
 let scrollLeft;
 
 slider.addEventListener('mousedown', (e) => {
+  // Only allow left mouse button
+  if (e.which !== 1) return;
+
   isDown = true;
 
-  // Correct start position
   startX = e.pageX - slider.offsetLeft;
-
-  // Save current scroll
   scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener('mouseleave', () => {
-  isDown = false;
-});
-
-slider.addEventListener('mouseup', () => {
-  isDown = false;
 });
 
 slider.addEventListener('mousemove', (e) => {
@@ -27,12 +19,16 @@ slider.addEventListener('mousemove', (e) => {
 
   e.preventDefault();
 
-  // Correct mouse position
   const x = e.pageX - slider.offsetLeft;
+  const walk = x - startX;
 
-  // Movement distance
-  const walk = (x - startX);
-
-  // Scroll movement
   slider.scrollLeft = scrollLeft - walk;
+});
+
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+});
+
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
 });
