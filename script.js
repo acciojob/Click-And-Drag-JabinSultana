@@ -1,9 +1,7 @@
 const items = document.querySelector(".items");
 
 let isDown = false;
-
 let startX;
-
 let scrollLeft;
 
 items.addEventListener("mousedown", (e) => {
@@ -17,14 +15,14 @@ scrollLeft = items.scrollLeft;
 });
 
 
-items.addEventListener("mouseleave", () => {
+items.addEventListener("mouseup", () => {
 
 isDown = false;
 
 });
 
 
-items.addEventListener("mouseup", () => {
+items.addEventListener("mouseleave", () => {
 
 isDown = false;
 

@@ -1,49 +1,61 @@
-body {
+/* RESET */
 
+* {
 margin: 0;
 padding: 0;
+box-sizing: border-box;
+}
+
+/* BODY */
+
+body {
+
+width: 100vw;
+height: 100vh;
 
 display: flex;
 justify-content: center;
 align-items: center;
 
-height: 100vh;
-
 }
 
-/* IMPORTANT: height must exist */
+/* MAIN CONTAINER */
+
 .items {
 
 width: 800px;
 
-height: 200px;   /* 🔥 FIX: prevents 0 height */
+/* 🔥 VERY IMPORTANT */
+height: 250px;
+
+/* prevents collapse */
+min-height: 250px;
 
 border: 3px solid black;
 
 display: flex;
 
+overflow-x: auto;
+overflow-y: hidden;
+
 gap: 10px;
 
 padding: 10px;
 
-overflow-x: auto;
-overflow-y: hidden;
+background: #f0f0f0;
 
 cursor: grab;
 
-background-color: #f0f0f0;
-
 }
 
-/* Cubes */
+/* CUBES */
 
 .cube {
 
-min-width: 100px;
-
+width: 100px;
 height: 100px;
 
-background-color: #3498db;
+background: #3498db;
 
 flex-shrink: 0;
 
