@@ -1,44 +1,46 @@
 const items = document.querySelector(".items");
 
 let isDown = false;
+
 let startX;
+
 let scrollLeft;
 
 items.addEventListener("mousedown", (e) => {
 
-    isDown = true;
+isDown = true;
 
-    startX = e.pageX - items.offsetLeft;
+startX = e.pageX - items.offsetLeft;
 
-    scrollLeft = items.scrollLeft;
+scrollLeft = items.scrollLeft;
 
 });
 
 
 items.addEventListener("mouseleave", () => {
 
-    isDown = false;
+isDown = false;
 
 });
 
 
 items.addEventListener("mouseup", () => {
 
-    isDown = false;
+isDown = false;
 
 });
 
 
 items.addEventListener("mousemove", (e) => {
 
-    if (!isDown) return;
+if (!isDown) return;
 
-    e.preventDefault();
+e.preventDefault();
 
-    const x = e.pageX - items.offsetLeft;
+const x = e.pageX - items.offsetLeft;
 
-    const walk = (x - startX);
+const walk = x - startX;
 
-    items.scrollLeft = scrollLeft - walk;
+items.scrollLeft = scrollLeft - walk;
 
 });

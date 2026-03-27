@@ -1,39 +1,50 @@
 body {
-    margin: 0;
-    padding: 0;
+
+margin: 0;
+padding: 0;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+height: 100vh;
+
 }
 
-/* Scrollable container */
+/* IMPORTANT: height must exist */
 .items {
 
-    width: 600px;
-    height: 300px;
+width: 800px;
 
-    margin: 50px auto;
+height: 200px;   /* 🔥 FIX: prevents 0 height */
 
-    border: 3px solid black;
+border: 3px solid black;
 
-    display: flex;
-    flex-wrap: nowrap;
+display: flex;
 
-    gap: 10px;
-    padding: 10px;
+gap: 10px;
 
-    overflow-x: scroll;
-    overflow-y: hidden;
+padding: 10px;
 
-    cursor: grab;
+overflow-x: auto;
+overflow-y: hidden;
+
+cursor: grab;
+
+background-color: #f0f0f0;
 
 }
 
 /* Cubes */
+
 .cube {
 
-    min-width: 80px;
-    height: 80px;
+min-width: 100px;
 
-    background-color: #3498db;
+height: 100px;
 
-    flex-shrink: 0;
+background-color: #3498db;
+
+flex-shrink: 0;
 
 }
