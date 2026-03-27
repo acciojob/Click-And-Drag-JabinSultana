@@ -1,109 +1,44 @@
-const container = document.getElementById("container");
-const cubes = document.querySelectorAll(".cube");
+const items = document.querySelector(".items");
 
-let currentCube = null;
+let isDown = false;
+let startX;
+let scrollLeft;
 
-let offsetX = 0;
-let offsetY = 0;
+items.addEventListener("mousedown", (e) => {
 
-const cubeSize = 80;
-const gap = 10;
-const padding = 10;
+    isDown = true;
 
-/* ---- Position cubes in grid manually ---- */
+    startX = e.pageX - items.offsetLeft;
 
-cubes.forEach((cube, index) => {
-
-    const cols = 4;
-
-    const row = Math.floor(index / cols);
-    const col = index % cols;
-
-    cube.style.left =
-        padding + col * (cubeSize + gap) + "px";
-
-    cube.style.top =
-        padding + row * (cubeSize + gap) + "px";
+    scrollLeft = items.scrollLeft;
 
 });
 
 
-/* ---- Drag Start ---- */
+items.addEventListener("mouseleave", () => {
 
-cubes.forEach(cube => {
-
-    cube.addEventListener("mousedown", (e) => {
-
-        currentCube = cube;
-
-        const rect = cube.getBoundingClientRect();
-
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-
-        cube.style.zIndex = 1000;
-
-    });
+    isDown = false;
 
 });
 
 
-/* ---- Drag Move ---- */
+items.addEventListener("mouseup", () => {
 
-document.addEventListener("mousemove", (e) => {
-
-    if (!currentCube) return;
-
-    const containerRect =
-        container.getBoundingClientRect();
-
-    let newLeft =
-        e.clientX - containerRect.left - offsetX;
-
-    let newTop =
-        e.clientY - containerRect.top - offsetY;
-
-
-    /* ---- Boundary Constraints ---- */
-
-    const maxLeft =
-        container.clientWidth -
-        currentCube.offsetWidth;
-
-    const maxTop =
-        container.clientHeight -
-        currentCube.offsetHeight;
-
-
-    if (newLeft < 0) newLeft = 0;
-    if (newTop < 0) newTop = 0;
-
-    if (newLeft > maxLeft)
-        newLeft = maxLeft;
-
-    if (newTop > maxTop)
-        newTop = maxTop;
-
-
-    currentCube.style.left =
-        newLeft + "px";
-
-    currentCube.style.top =
-        newTop + "px";
+    isDown = false;
 
 });
 
 
-/* ---- Drag End ---- */
+items.addEventListener("mousemove", (e) => {
 
-document.addEventListener("mouseup", () => {
+    if (!isDown) return;
 
-    if (currentCube) {
+    e.preventDefault();
 
-        currentCube.style.zIndex = 1;
+    const x = e.pageX - items.offsetLeft;
 
-        currentCube = null;
+    const walk = (x - startX);
 
-    }
+    items.scrollLeft = scrollLeft - walk;
 
 });
