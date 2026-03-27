@@ -1,34 +1,38 @@
 const slider = document.querySelector('.items');
 
 let isDown = false;
-let startX = 0;
-let scrollLeft = 0;
+let startX;
+let scrollLeft;
 
-slider.addEventListener('mousedown', function (e) {
+slider.addEventListener('mousedown', (e) => {
   isDown = true;
 
-  startX = e.pageX;
+  slider.classList.add('active');
+
+  startX = e.pageX - slider.offsetLeft;
   scrollLeft = slider.scrollLeft;
+
+  slider.style.cursor = "grabbing";
 });
 
-slider.addEventListener('mousemove', function (e) {
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  slider.style.cursor = "grab";
+});
 
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.style.cursor = "grab";
+});
+
+slider.addEventListener('mousemove', (e) => {
   if (!isDown) return;
 
   e.preventDefault();
 
-  // Calculate movement
-  const walk = (e.pageX - startX) * -1;
+  const x = e.pageX - slider.offsetLeft;
 
-  // Force scroll update
-  slider.scrollLeft = scrollLeft + walk;
+  const walk = (x - startX) * 2; // speed of scroll
 
-});
-
-slider.addEventListener('mouseup', function () {
-  isDown = false;
-});
-
-slider.addEventListener('mouseleave', function () {
-  isDown = false;
+  slider.scrollLeft = scrollLeft - walk;
 });

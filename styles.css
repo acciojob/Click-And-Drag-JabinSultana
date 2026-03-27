@@ -14,7 +14,10 @@ body {
 
 	position: relative;
 
-  cursor: grab;
+ .items.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
 
   border: 3px solid black;
 }
