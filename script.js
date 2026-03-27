@@ -7,22 +7,19 @@ let scrollLeft;
 slider.addEventListener('mousedown', (e) => {
   isDown = true;
 
-  slider.classList.add('active');
-
+  // Correct start position
   startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
 
-  slider.style.cursor = "grabbing";
+  // Save current scroll
+  scrollLeft = slider.scrollLeft;
 });
 
 slider.addEventListener('mouseleave', () => {
   isDown = false;
-  slider.style.cursor = "grab";
 });
 
 slider.addEventListener('mouseup', () => {
   isDown = false;
-  slider.style.cursor = "grab";
 });
 
 slider.addEventListener('mousemove', (e) => {
@@ -30,9 +27,12 @@ slider.addEventListener('mousemove', (e) => {
 
   e.preventDefault();
 
+  // Correct mouse position
   const x = e.pageX - slider.offsetLeft;
 
-  const walk = (x - startX) * 2; // speed of scroll
+  // Movement distance
+  const walk = (x - startX);
 
+  // Scroll movement
   slider.scrollLeft = scrollLeft - walk;
 });
