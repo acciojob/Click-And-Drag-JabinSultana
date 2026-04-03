@@ -1,32 +1,53 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+    margin: 0;
+    padding: 40px;
 }
 
-.container {
-    width: 400px;
-    height: 400px;
+/* Scroll container */
+
+.items {
+
+    width: 600px;
+    height: 250px;
+
+    display: flex;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
     border: 2px solid black;
-    margin: auto;
-    position: relative;
 
-    /* Grid layout initially */
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 10px;
-}
-
-.cube {
-    width: 80px;
-    height: 80px;
-    background-color: steelblue;
     cursor: grab;
 
-    /* Needed for dragging */
-    position: relative;
 }
 
-.cube:active {
+/* Active drag */
+
+.items.active {
     cursor: grabbing;
+}
+
+/* Items */
+
+.item {
+
+    flex: 0 0 auto;
+
+    width: 300px;
+    height: 200px;
+
+    margin-right: 20px;
+
+    background-color: steelblue;
+
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+
+    user-select: none;
+
 }

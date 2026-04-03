@@ -1,77 +1,41 @@
-const container = document.getElementById("container");
-const cubes = document.querySelectorAll(".cube");
+const slider = document.querySelector('.items');
 
-let selectedCube = null;
-let offsetX = 0;
-let offsetY = 0;
+let isDown = false;
+let startX = 0;
+let scrollLeft = 0;
 
-// Add listeners to all cubes
-cubes.forEach(cube => {
+slider.addEventListener('mousedown', (e) => {
 
-    cube.addEventListener("mousedown", (e) => {
+    if (e.which !== 1) return;
 
-        selectedCube = cube;
+    isDown = true;
 
-        // Change position to absolute when dragging starts
-        selectedCube.style.position = "absolute";
+    slider.classList.add('active');
 
-        // Get mouse offset
-        const rect = selectedCube.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
+    startX = e.pageX;
 
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-
-        // Move cube relative to container
-        selectedCube.style.left =
-            rect.left - containerRect.left + "px";
-
-        selectedCube.style.top =
-            rect.top - containerRect.top + "px";
-
-        selectedCube.style.zIndex = 1000;
-
-    });
+    scrollLeft = slider.scrollLeft;
 
 });
 
-document.addEventListener("mousemove", (e) => {
+document.addEventListener('mouseup', () => {
 
-    if (!selectedCube) return;
+    isDown = false;
 
-    const containerRect = container.getBoundingClientRect();
-
-    let newLeft =
-        e.clientX - containerRect.left - offsetX;
-
-    let newTop =
-        e.clientY - containerRect.top - offsetY;
-
-    // Boundary restriction
-    const cubeWidth = selectedCube.offsetWidth;
-    const cubeHeight = selectedCube.offsetHeight;
-
-    const maxLeft =
-        container.clientWidth - cubeWidth;
-
-    const maxTop =
-        container.clientHeight - cubeHeight;
-
-    // Prevent going outside
-    newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-    newTop = Math.max(0, Math.min(newTop, maxTop));
-
-    selectedCube.style.left = newLeft + "px";
-    selectedCube.style.top = newTop + "px";
+    slider.classList.remove('active');
 
 });
 
-document.addEventListener("mouseup", () => {
+document.addEventListener('mousemove', (e) => {
 
-    if (selectedCube) {
-        selectedCube.style.zIndex = 1;
-    }
+    if (!isDown) return;
 
-    selectedCube = null;
+    e.preventDefault();
+
+    const x = e.pageX;
+
+    const walk = x - startX;
+
+    slider.scrollLeft = scrollLeft - walk;
 
 });
